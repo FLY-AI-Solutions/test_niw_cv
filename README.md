@@ -1,6 +1,6 @@
 # test_niw_cv
 
-1. Start the Python backend with python ``code_local_api_server.py`` (fastAPI)
+1. Start the Python backend with python ``code_local_api_server.py`` (fastAPI) so that an API is created for the ``run_workflow.py``
 2. Open this ``test_ai_workflow.html`` file in your browser
 3. On the website, ``test_ai_workflow.html``, Enter ``dummy_input.txt`` file content and click Run Agent.
 
