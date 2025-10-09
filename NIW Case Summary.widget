@@ -1,0 +1,329 @@
+{
+  "version": "1.0",
+  "name": "NIW Case Summary",
+  "template": "{\"type\":\"Card\",\"size\":\"md\",\"children\":[{\"type\":\"Col\",\"gap\":2,\"children\":[{%- set _c -%},{\"type\":\"Row\",\"align\":\"center\",\"children\":[{\"type\":\"Title\",\"value\":{{ (title) | tojson }},\"size\":\"sm\",\"children\":[]}]},{\"type\":\"Divider\",\"flush\":true,\"children\":[]}{%-for item in pathways -%},{\"type\":\"Row\",\"key\":{{ (item.id) | tojson }},\"gap\":3,\"align\":\"start\",\"children\":[{\"type\":\"Box\",\"background\":\"alpha-10\",\"radius\":\"sm\",\"padding\":2,\"children\":[{\"type\":\"Icon\",\"name\":{{ (item.icon) | tojson }},\"children\":[]}]},{\"type\":\"Col\",\"gap\":1,\"flex\":1,\"children\":[{\"type\":\"Row\",\"children\":[{\"type\":\"Text\",\"value\":{{ (item.label) | tojson }},\"size\":\"sm\",\"weight\":\"semibold\",\"maxLines\":1,\"children\":[]},{\"type\":\"Spacer\",\"children\":[]},{\"type\":\"Badge\",\"label\":{{ (item.status) | tojson }},\"color\":{{ (item.badgeColor) | tojson }},\"children\":[]}]},{\"type\":\"Text\",\"value\":{{ (item.summary) | tojson }},\"size\":\"sm\",\"color\":\"secondary\",\"maxLines\":2,\"children\":[]}]},{\"type\":\"Button\",\"label\":\"Open\",\"variant\":\"outline\",\"size\":\"sm\",\"onClickAction\":{\"type\":\"niw.pathway.view\",\"payload\":{\"id\":{{ (item.id) | tojson }}}},\"children\":[]}]}{%-endfor-%},{\"type\":\"Divider\",\"children\":[]},{\"type\":\"Row\",\"children\":[{\"type\":\"Button\",\"label\":{{ ((\"Strengths (\" ~ strengthsCount ~ \")\")) | tojson }},\"iconStart\":\"star-filled\",\"variant\":\"soft\",\"color\":\"success\",\"onClickAction\":{\"type\":\"niw.strengths.view\"},\"children\":[]},{\"type\":\"Spacer\",\"children\":[]},{\"type\":\"Button\",\"label\":{{ ((\"Weaknesses (\" ~ weaknessesCount ~ \")\")) | tojson }},\"iconStart\":\"circle-question\",\"variant\":\"outline\",\"color\":\"warning\",\"onClickAction\":{\"type\":\"niw.weaknesses.view\"},\"children\":[]}]}{%- endset -%}{{- (_c[1:] if _c and _c[0] == ',' else _c) -}}]}]}",
+  "jsonSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "widget",
+    "type": "object",
+    "properties": {
+      "title": {
+        "type": "string"
+      },
+      "pathways": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "label": {
+              "type": "string"
+            },
+            "icon": {
+              "type": "string"
+            },
+            "status": {
+              "type": "string"
+            },
+            "badgeColor": {
+              "type": "string"
+            },
+            "summary": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "id",
+            "label",
+            "icon",
+            "status",
+            "badgeColor",
+            "summary"
+          ],
+          "additionalProperties": false
+        },
+        "minItems": 3
+      },
+      "strengthsCount": {
+        "type": "number"
+      },
+      "weaknessesCount": {
+        "type": "number"
+      },
+      "designSpec": {
+        "type": "string"
+      },
+      "complexityBudget": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "title",
+      "pathways",
+      "strengthsCount",
+      "weaknessesCount",
+      "designSpec",
+      "complexityBudget"
+    ],
+    "additionalProperties": false
+  },
+  "outputJsonPreview": {
+    "type": "Card",
+    "size": "md",
+    "children": [
+      {
+        "type": "Col",
+        "gap": 2,
+        "children": [
+          {
+            "type": "Row",
+            "align": "center",
+            "children": [
+              {
+                "type": "Title",
+                "value": "NIW Case Summary — John Doe",
+                "size": "sm"
+              }
+            ]
+          },
+          {
+            "type": "Divider",
+            "flush": true
+          },
+          {
+            "type": "Row",
+            "key": "prong1",
+            "gap": 3,
+            "align": "start",
+            "children": [
+              {
+                "type": "Box",
+                "background": "alpha-10",
+                "radius": "sm",
+                "padding": 2,
+                "children": [
+                  {
+                    "type": "Icon",
+                    "name": "globe"
+                  }
+                ]
+              },
+              {
+                "type": "Col",
+                "gap": 1,
+                "flex": 1,
+                "children": [
+                  {
+                    "type": "Row",
+                    "children": [
+                      {
+                        "type": "Text",
+                        "value": "Prong 1: Substantial Merit & National Importance",
+                        "size": "sm",
+                        "weight": "semibold",
+                        "maxLines": 1
+                      },
+                      {
+                        "type": "Spacer"
+                      },
+                      {
+                        "type": "Badge",
+                        "label": "Strong",
+                        "color": "success"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Text",
+                    "value": "AI for renewable energy grid optimization and carbon reduction addresses U.S. priorities in clean energy, reliability, and technological leadership; includes novel ML and an academia–industry lab for scalable deployment.",
+                    "size": "sm",
+                    "color": "secondary",
+                    "maxLines": 2
+                  }
+                ]
+              },
+              {
+                "type": "Button",
+                "label": "Open",
+                "variant": "outline",
+                "size": "sm",
+                "onClickAction": {
+                  "type": "niw.pathway.view",
+                  "payload": {
+                    "id": "prong1"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "type": "Row",
+            "key": "prong2",
+            "gap": 3,
+            "align": "start",
+            "children": [
+              {
+                "type": "Box",
+                "background": "alpha-10",
+                "radius": "sm",
+                "padding": 2,
+                "children": [
+                  {
+                    "type": "Icon",
+                    "name": "user"
+                  }
+                ]
+              },
+              {
+                "type": "Col",
+                "gap": 1,
+                "flex": 1,
+                "children": [
+                  {
+                    "type": "Row",
+                    "children": [
+                      {
+                        "type": "Text",
+                        "value": "Prong 2: Applicant Well Positioned",
+                        "size": "sm",
+                        "weight": "semibold",
+                        "maxLines": 1
+                      },
+                      {
+                        "type": "Spacer"
+                      },
+                      {
+                        "type": "Badge",
+                        "label": "Strong",
+                        "color": "success"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Text",
+                    "value": "Ph.D. Stanford, 1,500 citations, patent, Best Paper Award, NeurIPS presentation, leadership roles, and a Google offer signal exceptional capability to execute and scale the endeavor.",
+                    "size": "sm",
+                    "color": "secondary",
+                    "maxLines": 2
+                  }
+                ]
+              },
+              {
+                "type": "Button",
+                "label": "Open",
+                "variant": "outline",
+                "size": "sm",
+                "onClickAction": {
+                  "type": "niw.pathway.view",
+                  "payload": {
+                    "id": "prong2"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "type": "Row",
+            "key": "prong3",
+            "gap": 3,
+            "align": "start",
+            "children": [
+              {
+                "type": "Box",
+                "background": "alpha-10",
+                "radius": "sm",
+                "padding": 2,
+                "children": [
+                  {
+                    "type": "Icon",
+                    "name": "check-circle"
+                  }
+                ]
+              },
+              {
+                "type": "Col",
+                "gap": 1,
+                "flex": 1,
+                "children": [
+                  {
+                    "type": "Row",
+                    "children": [
+                      {
+                        "type": "Text",
+                        "value": "Prong 3: On Balance, Waiver Beneficial",
+                        "size": "sm",
+                        "weight": "semibold",
+                        "maxLines": 1
+                      },
+                      {
+                        "type": "Spacer"
+                      },
+                      {
+                        "type": "Badge",
+                        "label": "Strong",
+                        "color": "success"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Text",
+                    "value": "Waiving labor cert avoids delays to time‑sensitive pilots and partnerships; applicant’s rare mix of scholarship, innovation, and industry access accelerates national benefits in clean energy.",
+                    "size": "sm",
+                    "color": "secondary",
+                    "maxLines": 2
+                  }
+                ]
+              },
+              {
+                "type": "Button",
+                "label": "Open",
+                "variant": "outline",
+                "size": "sm",
+                "onClickAction": {
+                  "type": "niw.pathway.view",
+                  "payload": {
+                    "id": "prong3"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "type": "Divider"
+          },
+          {
+            "type": "Row",
+            "children": [
+              {
+                "type": "Button",
+                "label": "Strengths (8)",
+                "iconStart": "star-filled",
+                "variant": "soft",
+                "color": "success",
+                "onClickAction": {
+                  "type": "niw.strengths.view"
+                }
+              },
+              {
+                "type": "Spacer"
+              },
+              {
+                "type": "Button",
+                "label": "Weaknesses (5)",
+                "iconStart": "circle-question",
+                "variant": "outline",
+                "color": "warning",
+                "onClickAction": {
+                  "type": "niw.weaknesses.view"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "encodedWidget": "eyJpZCI6IjRlNWYzMDAxLWNiMDItNGVhNy1hYjE1LWQyOWViMjIwYzUyOCIsIm5hbWUiOiJOSVcgQ2FzZSBTdW1tYXJ5IiwidmlldyI6IjxDYXJkIHNpemU9XCJtZFwiPlxuICA8Q29sIGdhcD17Mn0-XG4gICAgPFJvdyBhbGlnbj1cImNlbnRlclwiPlxuICAgICAgPFRpdGxlIHZhbHVlPXt0aXRsZX0gc2l6ZT1cInNtXCIgLz5cbiAgICA8L1Jvdz5cbiAgICA8RGl2aWRlciBmbHVzaCAvPlxuICAgIHtwYXRod2F5cy5tYXAoKGl0ZW0pID0-IChcbiAgICAgIDxSb3cga2V5PXtpdGVtLmlkfSBnYXA9ezN9IGFsaWduPVwic3RhcnRcIj5cbiAgICAgICAgPEJveCBiYWNrZ3JvdW5kPVwiYWxwaGEtMTBcIiByYWRpdXM9XCJzbVwiIHBhZGRpbmc9ezJ9PlxuICAgICAgICAgIDxJY29uIG5hbWU9e2l0ZW0uaWNvbn0gLz5cbiAgICAgICAgPC9Cb3g-XG4gICAgICAgIDxDb2wgZ2FwPXsxfSBmbGV4PXsxfT5cbiAgICAgICAgICA8Um93PlxuICAgICAgICAgICAgPFRleHQgdmFsdWU9e2l0ZW0ubGFiZWx9IHNpemU9XCJzbVwiIHdlaWdodD1cInNlbWlib2xkXCIgbWF4TGluZXM9ezF9IC8-XG4gICAgICAgICAgICA8U3BhY2VyIC8-XG4gICAgICAgICAgICA8QmFkZ2UgbGFiZWw9e2l0ZW0uc3RhdHVzfSBjb2xvcj17aXRlbS5iYWRnZUNvbG9yfSAvPlxuICAgICAgICAgIDwvUm93PlxuICAgICAgICAgIDxUZXh0IHZhbHVlPXtpdGVtLnN1bW1hcnl9IHNpemU9XCJzbVwiIGNvbG9yPVwic2Vjb25kYXJ5XCIgbWF4TGluZXM9ezJ9IC8-XG4gICAgICAgIDwvQ29sPlxuICAgICAgICA8QnV0dG9uXG4gICAgICAgICAgbGFiZWw9XCJPcGVuXCJcbiAgICAgICAgICB2YXJpYW50PVwib3V0bGluZVwiXG4gICAgICAgICAgc2l6ZT1cInNtXCJcbiAgICAgICAgICBvbkNsaWNrQWN0aW9uPXt7IHR5cGU6IFwibml3LnBhdGh3YXkudmlld1wiLCBwYXlsb2FkOiB7IGlkOiBpdGVtLmlkIH0gfX1cbiAgICAgICAgLz5cbiAgICAgIDwvUm93PlxuICAgICkpfVxuICAgIDxEaXZpZGVyIC8-XG4gICAgPFJvdz5cbiAgICAgIDxCdXR0b25cbiAgICAgICAgbGFiZWw9e2BTdHJlbmd0aHMgKCR7c3RyZW5ndGhzQ291bnR9KWB9XG4gICAgICAgIGljb25TdGFydD1cInN0YXItZmlsbGVkXCJcbiAgICAgICAgdmFyaWFudD1cInNvZnRcIlxuICAgICAgICBjb2xvcj1cInN1Y2Nlc3NcIlxuICAgICAgICBvbkNsaWNrQWN0aW9uPXt7IHR5cGU6IFwibml3LnN0cmVuZ3Rocy52aWV3XCIgfX1cbiAgICAgIC8-XG4gICAgICA8U3BhY2VyIC8-XG4gICAgICA8QnV0dG9uXG4gICAgICAgIGxhYmVsPXtgV2Vha25lc3NlcyAoJHt3ZWFrbmVzc2VzQ291bnR9KWB9XG4gICAgICAgIGljb25TdGFydD1cImNpcmNsZS1xdWVzdGlvblwiXG4gICAgICAgIHZhcmlhbnQ9XCJvdXRsaW5lXCJcbiAgICAgICAgY29sb3I9XCJ3YXJuaW5nXCJcbiAgICAgICAgb25DbGlja0FjdGlvbj17eyB0eXBlOiBcIm5pdy53ZWFrbmVzc2VzLnZpZXdcIiB9fVxuICAgICAgLz5cbiAgICA8L1Jvdz5cbiAgPC9Db2w-XG48L0NhcmQ-IiwiZGVmYXVsdFN0YXRlIjp7InRpdGxlIjoiTklXIENhc2UgU3VtbWFyeSDigJQgSm9obiBEb2UiLCJwYXRod2F5cyI6W3siaWQiOiJwcm9uZzEiLCJsYWJlbCI6IlByb25nIDE6IFN1YnN0YW50aWFsIE1lcml0ICYgTmF0aW9uYWwgSW1wb3J0YW5jZSIsImljb24iOiJnbG9iZSIsInN0YXR1cyI6IlN0cm9uZyIsImJhZGdlQ29sb3IiOiJzdWNjZXNzIiwic3VtbWFyeSI6IkFJIGZvciByZW5ld2FibGUgZW5lcmd5IGdyaWQgb3B0aW1pemF0aW9uIGFuZCBjYXJib24gcmVkdWN0aW9uIGFkZHJlc3NlcyBVLlMuIHByaW9yaXRpZXMgaW4gY2xlYW4gZW5lcmd5LCByZWxpYWJpbGl0eSwgYW5kIHRlY2hub2xvZ2ljYWwgbGVhZGVyc2hpcDsgaW5jbHVkZXMgbm92ZWwgTUwgYW5kIGFuIGFjYWRlbWlh4oCTaW5kdXN0cnkgbGFiIGZvciBzY2FsYWJsZSBkZXBsb3ltZW50LiJ9LHsiaWQiOiJwcm9uZzIiLCJsYWJlbCI6IlByb25nIDI6IEFwcGxpY2FudCBXZWxsIFBvc2l0aW9uZWQiLCJpY29uIjoidXNlciIsInN0YXR1cyI6IlN0cm9uZyIsImJhZGdlQ29sb3IiOiJzdWNjZXNzIiwic3VtbWFyeSI6IlBoLkQuIFN0YW5mb3JkLCAxLDUwMCBjaXRhdGlvbnMsIHBhdGVudCwgQmVzdCBQYXBlciBBd2FyZCwgTmV1cklQUyBwcmVzZW50YXRpb24sIGxlYWRlcnNoaXAgcm9sZXMsIGFuZCBhIEdvb2dsZSBvZmZlciBzaWduYWwgZXhjZXB0aW9uYWwgY2FwYWJpbGl0eSB0byBleGVjdXRlIGFuZCBzY2FsZSB0aGUgZW5kZWF2b3IuIn0seyJpZCI6InByb25nMyIsImxhYmVsIjoiUHJvbmcgMzogT24gQmFsYW5jZSwgV2FpdmVyIEJlbmVmaWNpYWwiLCJpY29uIjoiY2hlY2stY2lyY2xlIiwic3RhdHVzIjoiU3Ryb25nIiwiYmFkZ2VDb2xvciI6InN1Y2Nlc3MiLCJzdW1tYXJ5IjoiV2FpdmluZyBsYWJvciBjZXJ0IGF2b2lkcyBkZWxheXMgdG8gdGltZeKAkXNlbnNpdGl2ZSBwaWxvdHMgYW5kIHBhcnRuZXJzaGlwczsgYXBwbGljYW504oCZcyByYXJlIG1peCBvZiBzY2hvbGFyc2hpcCwgaW5ub3ZhdGlvbiwgYW5kIGluZHVzdHJ5IGFjY2VzcyBhY2NlbGVyYXRlcyBuYXRpb25hbCBiZW5lZml0cyBpbiBjbGVhbiBlbmVyZ3kuIn1dLCJzdHJlbmd0aHNDb3VudCI6OCwid2Vha25lc3Nlc0NvdW50Ijo1LCJkZXNpZ25TcGVjIjoiQ29tcGFjdCBOSVcgb3ZlcnZpZXcgaGlnaGxpZ2h0aW5nIDMgRGhhbmFzYXIgcHJvbmdzIHdpdGggc3RhdHVzIGNoaXBzIGFuZCBxdWljayBhY2Nlc3MgdG8gc3RyZW5ndGhzL3dlYWtuZXNzZXMuIE9wdGltaXplZCBmb3IgYXTigJFh4oCRZ2xhbmNlIHJldmlldyBpbiBsZWdhbCB3b3JrZmxvd3MuIiwiY29tcGxleGl0eUJ1ZGdldCI6IldpdGhpbiBidWRnZXQ6IG9uZSBjYXJkLCB0aHJlZSBsaXN0IHJvd3MsIHR3byBhY3Rpb24gYnV0dG9uczsgbm8gaW1hZ2VzIG9yIHJpY2ggbWV0YWRhdGEuIn0sInN0YXRlcyI6W119"
+}
