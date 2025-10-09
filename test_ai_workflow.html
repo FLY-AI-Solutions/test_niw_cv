@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Agent Runner</title>
+  </head>
+  <body>
+    <h2>Run Agent Workflow</h2>
+    <textarea id="inputText" rows="5" cols="60" placeholder="Enter input text..."></textarea><br>
+    <button id="runButton">Run Agent</button>
+
+    <h3>Result:</h3>
+    <pre id="output"></pre>
+
+    <script>
+      document.getElementById("runButton").addEventListener("click", async () => {
+        const inputText = document.getElementById("inputText").value;
+
+        document.getElementById("output").innerText = "Running agent...";
+
+        const response = await fetch("http://localhost:8000/run-agent", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ input_as_text: inputText }),
+        });
+
+        const result = await response.json();
+        document.getElementById("output").innerText = JSON.stringify(result.data, null, 2);
+      });
+    </script>
+  </body>
+</html>
