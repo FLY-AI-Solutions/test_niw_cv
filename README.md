@@ -2,8 +2,7 @@
 
 1. Start the Python backend with python ``server.py`` (fastAPI) so that an API endpoint ``/run-agent`` is created for the ``run_workflow.py``
 2. Open this ``test_ai_workflow.html`` file in your browser
-3. On the website, ``test_ai_workflow.html``, Enter ``dummy_input.txt`` file content and click Run Agent. See if the output makes sense or not. Following output should be displayed.
-
+3. On the website, ``test_ai_workflow.html``, Copy and paste ``dummy_input.txt`` file content in the input field and click Run Agent Button. See if the output makes sense or not. Following output image should be displayed or releted structured information.
 ![Output Example](IMG_0789.jpeg)
 ## FINAL INTEGRATION WITH THE portfolio- ``https://fly-ai-solutions.github.io/test_niw_cv/``
 
