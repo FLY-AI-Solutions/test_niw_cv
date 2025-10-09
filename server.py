@@ -1,13 +1,26 @@
 # server.py
+from dotenv import load_dotenv
+import os
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI
 from pydantic import BaseModel
 import uvicorn
 import asyncio
 
+load_dotenv()
+
 # import your workflow code here
-from your_module import run_workflow, WorkflowInput
+from run_workflow import run_workflow, WorkflowInput
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # or specify your frontend origin
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 class WorkflowRequest(BaseModel):
     input_as_text: str
