@@ -23,8 +23,8 @@
       document.getElementById("runButton").addEventListener("click", async () => {
         const inputText = document.getElementById("inputText").value;
         const output = document.getElementById("widgetFrame").contentWindow;
-
-        const response = await fetch("http://localhost:8000/run-agent", {
+        // TEST_COMMAND: curl -X POST http://18.224.158.29:8000/run-agent -H "Content-Type: application/json" -d '{"input_as_text": "test input"}'
+        const response = await fetch("http://18.224.158.29:8000/run-agent", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ input_as_text: inputText }),
