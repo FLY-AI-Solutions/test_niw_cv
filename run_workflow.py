@@ -144,3 +144,9 @@ async def run_workflow(workflow_input: WorkflowInput):
     "output_text": summarize_and_display_result_temp.final_output.json(),
     "output_parsed": summarize_and_display_result_temp.final_output.model_dump()
   }
+  # Return both results
+  return {
+    "web_research_agent": web_research_agent_result,
+    "summarize_and_display": summarize_and_display_result
+  }
+
