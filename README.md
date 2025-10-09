@@ -4,7 +4,7 @@
 2. Open this ``test_ai_workflow.html`` file in your browser
 3. On the website, ``test_ai_workflow.html``, Enter ``dummy_input.txt`` file content and click Run Agent. See if the output makes sense or not. Following output should be displayed.
 
-![Output Example](TEST.png)
+![Output Example](IMG_0789.jpeg)
 ## FINAL INTEGRATION WITH THE portfolio- ``https://fly-ai-solutions.github.io/test_niw_cv/``
 
 If Step 3 TEST works, then generate the two jsons from the ``index.html`` page and call the ``run-agent`` API endpoint to generate the final output to display to the user.
