@@ -161,32 +161,46 @@
     </style>
   </head>
   <body>
-    <header class="header">
-      <h1>
-        <span id="name" class="editable" contenteditable="true">John Doe</span>
-        <i
-          class="fas fa-edit edit-btn"
-          onclick="document.getElementById('name').focus();"
-        ></i>
-      </h1>
-      <p>
-        <span id="degree" class="editable" contenteditable="true"
-          >Ph.D. in Computer Science, Stanford University</span
-        >
-        <i
-          class="fas fa-edit edit-btn"
-          onclick="document.getElementById('degree').focus();"
-        ></i>
-        (WES Evaluation:
-        <select id="wes" class="form-select-sm">
-          <option value="YES" selected>YES</option>
-          <option value="NO">NO</option>
-          <option value="NotRequired">Not Required</option></select
-        >)
-      </p>
-    </header>
-
     <form>
+      <header class="header">
+        <h1>
+          <span id="name" class="editable" contenteditable="true"
+            >John Doe</span
+          >
+          <i
+            class="fas fa-edit edit-btn"
+            onclick="document.getElementById('name').focus();"
+          ></i>
+        </h1>
+        <h2>
+          <span id="email" class="editable" contenteditable="true"
+            >johndoe@gmail.com</span
+          >
+          <i
+            class="fas fa-edit edit-btn"
+            onclick="document.getElementById('email').focus();"
+          ></i>
+          <span class="fs-6 text-secondary lead"
+            >(Your email will be your ID)</span
+          >
+        </h2>
+        <p>
+          <span id="degree" class="editable" contenteditable="true"
+            >Ph.D. in Computer Science, Stanford University</span
+          >
+          <i
+            class="fas fa-edit edit-btn"
+            onclick="document.getElementById('degree').focus();"
+          ></i>
+          (WES Evaluation:
+          <select id="wes" class="form-select-sm">
+            <option value="YES" selected>YES</option>
+            <option value="NO">NO</option>
+            <option value="NotRequired">Not Required</option></select
+          >)
+        </p>
+      </header>
+
       <div class="container">
         <section class="section" id="degrees-section">
           <h2>
@@ -987,15 +1001,18 @@
             return el ? el.value : "";
           };
 
-          // --- Collect applicant profile ---
           const applicant_profile = {
-            name: "John Doe", // manually filled or later dynamically grabbed
-            highest_degree_statement: getText(
-              "#education-summary-list .item p"
-            ),
-            wes_evaluation_status: "YES",
+            name: document.getElementById("name")?.innerText.trim() || "",
+            email:
+              document.getElementById("email")?.innerText.trim() ||
+              document.getElementById("email")?.value.trim() ||
+              "",
+            wes_evaluation_status: document.getElementById("wes")?.value || "",
+            highest_degree_statement:
+              document
+                .querySelector("#education-summary-list .item p")
+                ?.innerText.trim() || "",
           };
-
           // --- Education ---
           const education = Array.from(
             document.querySelectorAll("#degrees-list .item")
@@ -1199,11 +1216,6 @@
             past_projects_demonstrating_capability,
             future_prospects_in_us,
           };
-
-          console.log("INPUT_JSON_1:", INPUT_JSON_1);
-          console.log("INPUT_JSON_2:", INPUT_JSON_2);
-          alert("Check the console for the two generated JSONs!");
-
           const merge_json =
             JSON.stringify(INPUT_JSON_1, null, 2) +
             JSON.stringify(INPUT_JSON_2, null, 2);
@@ -1211,7 +1223,6 @@
           // Fetch function
           const spinner = document.getElementById("spinnerOverlay");
           try {
-            // Show spinner
             spinner.style.display = "flex";
 
             const response = await fetch(
@@ -1232,14 +1243,40 @@
               return;
             }
 
-            // Hide spinner
             spinner.style.display = "none";
+            console.log("Summary:", summary);
 
-            // Store data temporarily so response.html can use it
-            localStorage.setItem("summaryData", JSON.stringify(summary));
+            const email = INPUT_JSON_1.applicant_profile.email;
+            console.log(email);
 
-            // Move to the response page
-            window.location.href = "response.html";
+            // Call your save-user-data API with summary + email
+            try {
+              const saveResponse = await fetch(
+                "http://localhost:8000/save-user-data",
+                {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({
+                    email: email,
+                    json_data: summary,
+                  }),
+                }
+              );
+
+              const saveResult = await saveResponse.json();
+              console.log("Save-user-data response:", saveResult);
+
+              if (saveResult.status !== "success") {
+                console.warn(
+                  "Save-user-data API returned an error:",
+                  saveResult.message
+                );
+                alert("Warning: Data saved partially or failed!");
+              }
+            } catch (saveErr) {
+              console.error("Error saving user data:", saveErr);
+              alert("Failed to save user data to server!");
+            }
           } catch (error) {
             spinner.style.display = "none";
             console.error("Error:", error);

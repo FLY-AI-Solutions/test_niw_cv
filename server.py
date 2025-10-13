@@ -1,37 +1,108 @@
-# server.py
 from dotenv import load_dotenv
 import os
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI
 from pydantic import BaseModel
 import uvicorn
-import asyncio
+import psycopg2
+import json
+from psycopg2.extras import RealDictCursor
 
 load_dotenv()
-
-# import your workflow code here
-from run_workflow import run_workflow, WorkflowInput
 
 app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # or specify your frontend origin
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-class WorkflowRequest(BaseModel):
-    input_as_text: str
+class SaveUserDataRequest(BaseModel):
+    email: str
+    json_data: dict
 
-@app.post("/run-agent")
-async def run_agent(request: WorkflowRequest):
-    result = await run_workflow(request)
-    return {
-        "status": "success",
-        "data": result
-    }
+
+# PostgreSQL helper
+def get_db_connection():
+    try:
+        conn = psycopg2.connect(
+            host=os.getenv("DB_HOST", "localhost"),
+            port=os.getenv("DB_PORT", 5432),
+            database=os.getenv("DB_NAME"),
+            user=os.getenv("DB_USER"),
+            password=os.getenv("DB_PASS"),
+            cursor_factory=RealDictCursor
+        )
+        return conn
+    except Exception as e:
+        print("DB Connection error:", e)
+        return None
+
+
+# New endpoint
+@app.post("/save-user-data")
+async def save_user_data(request: SaveUserDataRequest):
+    email = request.email
+    json_data = request.json_data
+
+    conn = get_db_connection()
+    if not conn:
+        return {"status": "error", "message": "Cannot connect to database. Check your DB credentials."}
+
+    try:
+        cur = conn.cursor()
+
+        # Check if user already exists
+        cur.execute("SELECT user_id FROM i140users WHERE email = %s", (email,))
+        user = cur.fetchone()
+
+        if user:
+            # If exists, insert into i140users_data
+            user_id = user["user_id"]
+            cur.execute(
+                """
+                INSERT INTO i140users_data (user_id, json3_process)
+                VALUES (%s, %s)
+                """,
+                (user_id, json_data),
+            )
+            msg = f"Existing user found. Data added for user_id {user_id}."
+        else:
+            # If not exist, create user then insert data
+            cur.execute(
+                """
+                INSERT INTO i140users (email, role, credit_remaining)
+                VALUES (%s, %s, %s)
+                RETURNING user_id
+                """,
+                (email, "user", 0),
+            )
+            new_user_id = cur.fetchone()["user_id"]
+
+            cur.execute(
+                """
+                INSERT INTO i140users_data (user_id, json3_process)
+                VALUES (%s, %s)
+                """,
+                (new_user_id, json.dumps(json_data)),
+            )
+            msg = f"New user created with user_id {new_user_id}."
+
+        conn.commit()
+        cur.close()
+        conn.close()
+
+        return {"status": "success", "message": msg}
+
+    except Exception as e:
+        conn.rollback()
+        cur.close()
+        conn.close()
+        return {"status": "error", "message": str(e)}
+
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
