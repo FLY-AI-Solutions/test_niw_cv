@@ -1264,7 +1264,7 @@
               );
 
               const saveResult = await saveResponse.json();
-              console.log("Save-user-data response:");
+              console.log("Save-user-data response:", saveResult);
 
               if (saveResult.status !== "success") {
                 console.warn(
@@ -1274,7 +1274,6 @@
                 alert("Warning: Data saved partially or failed!");
               } else {
                 const dataId = saveResult.data_id;
-                console.log("Data ID returned:", dataId);
                 window.location.href = `payment.html?rB=${encodeURIComponent(
                   dataId
                 )}`;
