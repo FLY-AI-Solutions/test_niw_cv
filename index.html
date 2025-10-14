@@ -1225,17 +1225,153 @@
           try {
             spinner.style.display = "flex";
 
-            const response = await fetch(
-              "https://api-i140.flyai.online/api-i140/run-agent",
-              {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ input_as_text: merge_json }),
-              }
-            );
+            // const response = await fetch(
+            //   "https://api-i140.flyai.online/api-i140/run-agent",
+            //   {
+            //     method: "POST",
+            //     headers: { "Content-Type": "application/json" },
+            //     body: JSON.stringify({ input_as_text: merge_json }),
+            //   }
+            // );
 
-            const result = await response.json();
-            const summary = result.data?.summarize_and_display?.output_parsed;
+            // const result = await response.json();
+            // const summary = result.data?.summarize_and_display?.output_parsed;
+
+            summary = {
+              title: "NIW Research Summary for John Doe",
+              pathways: [
+                {
+                  id: "applicant_overview",
+                  label: "Applicant Overview",
+                  icon: "user",
+                  status: "info",
+                  badgeColor: "blue",
+                  summary:
+                    "Name: John Doe | Email: johndoe@gmail.com | WES Evaluation: YES | Highest Degree: Ph.D. in Computer Science (Stanford). Ph.D. completion year listed as 2030; verify timeline.",
+                },
+                {
+                  id: "education",
+                  label: "Education",
+                  icon: "graduation-cap",
+                  status: "info",
+                  badgeColor: "blue",
+                  summary:
+                    "Ph.D. in Computer Science, Stanford University (2030). Confirm degree completion date aligns with current role.",
+                },
+                {
+                  id: "scholarly_impact",
+                  label: "Scholarly Impact",
+                  icon: "chart-line",
+                  status: "success",
+                  badgeColor: "green",
+                  summary:
+                    "Google Scholar: http://127.0.0.1:5500/index.html# | Total citations: 1,500 (strong impact). Provide h-index/i10-index if available.",
+                },
+                {
+                  id: "publications_patents",
+                  label: "Publications & Patents",
+                  icon: "file-text",
+                  status: "success",
+                  badgeColor: "green",
+                  summary:
+                    "Journal: “Advancements in AI,” Journal of Machine Learning (2030). Conference: “AI Ethics,” NeurIPS (2030). Patent: US123456 “Method for AI-driven data analysis” (2030).",
+                },
+                {
+                  id: "awards",
+                  label: "Awards & Honors",
+                  icon: "award",
+                  status: "success",
+                  badgeColor: "green",
+                  summary:
+                    "Best Paper Award, ACM Conference (International, 2030).",
+                },
+                {
+                  id: "experience",
+                  label: "Professional Experience",
+                  icon: "briefcase",
+                  status: "info",
+                  badgeColor: "blue",
+                  summary:
+                    "Research Scientist at Tech Corp (2030–Current). Led AI research teams, managed projects, published ML work. Clarify employer details and exact dates.",
+                },
+                {
+                  id: "memberships",
+                  label: "Distinguished Memberships",
+                  icon: "users",
+                  status: "info",
+                  badgeColor: "blue",
+                  summary: "IEEE Computer Society — Member.",
+                },
+                {
+                  id: "media",
+                  label: "Media Coverage",
+                  icon: "bullhorn",
+                  status: "warning",
+                  badgeColor: "orange",
+                  summary:
+                    "“Breakthrough in AI Research,” Tech Journal (2030). No documentary proof provided; obtain copies/links.",
+                },
+                {
+                  id: "endeavor",
+                  label: "Proposed Endeavor",
+                  icon: "lightbulb",
+                  status: "success",
+                  badgeColor: "green",
+                  summary:
+                    "Develop novel ML algorithms for sustainable energy systems; establish a collaborative research lab to optimize renewable grids and reduce carbon footprints; aligns with U.S. innovation and climate goals.",
+                },
+                {
+                  id: "projects",
+                  label: "Past Projects Demonstrating Capability",
+                  icon: "tasks",
+                  status: "success",
+                  badgeColor: "green",
+                  summary:
+                    "Project: AI for Healthcare (U.S. diagnostics). Connected achievements: Stanford Ph.D., journal article, NeurIPS presentation, ACM Best Paper, US patent, Tech Journal coverage.",
+                },
+                {
+                  id: "future_us",
+                  label: "Future Prospects in U.S.",
+                  icon: "flag-usa",
+                  status: "warning",
+                  badgeColor: "orange",
+                  summary:
+                    "Target role: Senior AI Researcher at Google (no offer letter). Secure letters of interest/intent from U.S. entities to strengthen case.",
+                },
+                {
+                  id: "niw_prong1",
+                  label: "NIW Prong 1: National Importance & Merit",
+                  icon: "target",
+                  status: "success",
+                  badgeColor: "green",
+                  summary:
+                    "Impact areas: renewable grid optimization, emissions reduction, scalable AI tools for utilities, U.S. leadership in clean energy, industry–academia collaboration. Evidence: Stanford Ph.D., 1,500 citations, peer-reviewed outputs, patent, international award. Add support: stakeholder letters (utilities/DOE labs), MOUs, deployment pathways, linkage to DOE/ARPA‑E/NSF priorities.",
+                },
+                {
+                  id: "niw_prong2",
+                  label: "NIW Prong 2: Well Positioned to Advance",
+                  icon: "rocket",
+                  status: "success",
+                  badgeColor: "green",
+                  summary:
+                    "Strengths: top-tier Ph.D., high citations, publications incl. NeurIPS, patent, leadership as Research Scientist. Gaps: timeline inconsistencies (2030 Ph.D.; -5 years experience), missing employer details, placeholder Scholar URL. Provide degree/WES docs, full CV, verified Scholar link, employer letters, and U.S. collaboration letters.",
+                },
+                {
+                  id: "niw_prong3",
+                  label: "NIW Prong 3: Benefit of Waiver",
+                  icon: "shield-check",
+                  status: "success",
+                  badgeColor: "green",
+                  summary:
+                    "Labor cert delays would hinder time-sensitive clean-energy AI deployments with utilities. Quantified merits: citations 1,500; publications 2; patent 1; award 1. Provide letters evidencing project timelines, anticipated losses from delay, and comparative influence vs. peers (h-index, independent citations, leadership roles).",
+                },
+              ],
+              strengthsCount: 8,
+              weaknessesCount: 5,
+              designSpec:
+                "Concise dashboard-style summary emphasizing NIW prongs, credentials, and action items.",
+              complexityBudget: "Medium",
+            };
 
             if (!summary) {
               alert("No summary data returned!");

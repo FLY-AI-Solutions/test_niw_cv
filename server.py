@@ -50,7 +50,10 @@ async def save_user_data(request: SaveUserDataRequest):
 
     conn = get_db_connection()
     if not conn:
-        return {"status": "error", "message": "Cannot connect to database. Check your DB credentials."}
+        return {
+            "status": "error",
+            "message": "Cannot connect to database. Check your DB credentials.",
+        }
 
     try:
         cur = conn.cursor()
@@ -60,18 +63,20 @@ async def save_user_data(request: SaveUserDataRequest):
         user = cur.fetchone()
 
         if user:
-            # If exists, insert into i140users_data
+            # Existing user — add new JSON record
             user_id = user["user_id"]
             cur.execute(
                 """
                 INSERT INTO i140users_data (user_id, json3_process)
                 VALUES (%s, %s)
+                RETURNING data_id
                 """,
-                (user_id, json_data),
+                (user_id, json.dumps(json_data)),  # serialize JSON
             )
-            msg = f"Existing user found. Data added for user_id {user_id}."
+            data_id = cur.fetchone()["data_id"]
+            msg = f"Existing user found. Data added for user_id {user_id}, data_id {data_id}."
         else:
-            # If not exist, create user then insert data
+            # New user — create them first
             cur.execute(
                 """
                 INSERT INTO i140users (email, role, credit_remaining)
@@ -86,23 +91,25 @@ async def save_user_data(request: SaveUserDataRequest):
                 """
                 INSERT INTO i140users_data (user_id, json3_process)
                 VALUES (%s, %s)
+                RETURNING data_id
                 """,
-                (new_user_id, json.dumps(json_data)),
+                (new_user_id, json.dumps(json_data)),  # serialize JSON
             )
-            msg = f"New user created with user_id {new_user_id}."
+            data_id = cur.fetchone()["data_id"]
+            msg = f"New user created with user_id {new_user_id}, data_id {data_id}."
 
         conn.commit()
-        cur.close()
-        conn.close()
 
-        return {"status": "success", "message": msg}
+        return {"status": "success", "message": msg, "data_id": data_id}
 
     except Exception as e:
-        conn.rollback()
-        cur.close()
-        conn.close()
+        if conn:
+            conn.rollback()
         return {"status": "error", "message": str(e)}
 
+    finally:
+        if conn:
+            conn.close()
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
