@@ -1266,14 +1266,17 @@
 
             // Call your save-user-data API with summary + email
             try {
-              const saveResponse = await fetch("/save-user-data", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                  email: email,
-                  json_data: summary,
-                }),
-              });
+              const saveResponse = await fetch(
+                "https://api-i140.flyai.online/api-i140/save-user-data",
+                {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({
+                    email: email,
+                    json_data: summary,
+                  }),
+                }
+              );
 
               const saveResult = await saveResponse.json();
               console.log("Save-user-data response:", saveResult);
