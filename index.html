@@ -205,7 +205,7 @@
         <section class="section" id="degrees-section">
           <h2>
             Academic Degrees
-            <button class="add-btn" onclick="addDegree()">
+            <button class="add-btn" type="button" onclick="addDegree()">
               <i class="fas fa-plus"></i>
             </button>
           </h2>
@@ -226,7 +226,7 @@
         <section class="section" id="awards-section">
           <h2>
             Awards
-            <button class="add-btn" onclick="addAward()">
+            <button class="add-btn" type="button" onclick="addAward()">
               <i class="fas fa-plus"></i>
             </button>
           </h2>
@@ -252,7 +252,7 @@
         <section class="section" id="journals-section">
           <h2>
             Journal Articles
-            <button class="add-btn" onclick="addJournal()">
+            <button class="add-btn" type="button" onclick="addJournal()">
               <i class="fas fa-plus"></i>
             </button>
           </h2>
@@ -273,7 +273,7 @@
         <section class="section" id="conferences-section">
           <h2>
             Conference Presentations
-            <button class="add-btn" onclick="addConference()">
+            <button class="add-btn" type="button" onclick="addConference()">
               <i class="fas fa-plus"></i>
             </button>
           </h2>
@@ -294,7 +294,7 @@
         <section class="section" id="media-coverage-section">
           <h2>
             Media Coverage
-            <button class="add-btn" onclick="addMediaCoverage()">
+            <button class="add-btn" type="button" onclick="addMediaCoverage()">
               <i class="fas fa-plus"></i>
             </button>
           </h2>
@@ -306,7 +306,10 @@
                 </p>
                 <div class="offer-letter">
                   File: <span class="file-name">None</span>
-                  <button class="btn btn-sm btn-secondary upload-btn">
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-secondary upload-btn"
+                  >
                     Upload PDF
                   </button>
                   <input
@@ -354,7 +357,7 @@
         <section class="section" id="patents-books-section">
           <h2>
             Patents or Books
-            <button class="add-btn" onclick="addPatentOrBook()">
+            <button class="add-btn" type="button" onclick="addPatentOrBook()">
               <i class="fas fa-plus"></i>
             </button>
           </h2>
@@ -375,7 +378,7 @@
         <section class="section" id="projects-section">
           <h2>
             Projects
-            <button class="add-btn" onclick="addProject()">
+            <button class="add-btn" type="button" onclick="addProject()">
               <i class="fas fa-plus"></i>
             </button>
           </h2>
@@ -395,36 +398,42 @@
               </p>
               <div class="connections">
                 <button
+                  type="button"
                   class="btn btn-outline-primary connect-btn"
                   data-type="degrees"
                 >
                   Degrees (none)
                 </button>
                 <button
+                  type="button"
                   class="btn btn-outline-primary connect-btn"
                   data-type="journals"
                 >
                   Journal Articles (none)
                 </button>
                 <button
+                  type="button"
                   class="btn btn-outline-primary connect-btn"
                   data-type="conferences"
                 >
                   Conference Presentations (none)
                 </button>
                 <button
+                  type="button"
                   class="btn btn-outline-primary connect-btn"
                   data-type="media_coverage"
                 >
                   Media Coverage (none)
                 </button>
                 <button
+                  type="button"
                   class="btn btn-outline-primary connect-btn"
                   data-type="patents_books"
                 >
                   Patents/Books (none)
                 </button>
                 <button
+                  type="button"
                   class="btn btn-outline-primary connect-btn"
                   data-type="awards"
                 >
@@ -442,7 +451,7 @@
         <section class="section" id="experience-section">
           <h2>
             Professional Experience
-            <button class="add-btn" onclick="addExperience()">
+            <button class="add-btn" type="button" onclick="addExperience()">
               <i class="fas fa-plus"></i>
             </button>
           </h2>
@@ -479,7 +488,11 @@
         <section class="section" id="education-summary-section">
           <h2>
             Education Summary
-            <button class="add-btn" onclick="addEducationSummary()">
+            <button
+              class="add-btn"
+              type="button"
+              onclick="addEducationSummary()"
+            >
               <i class="fas fa-plus"></i>
             </button>
           </h2>
@@ -505,7 +518,7 @@
         <section class="section" id="memberships-section">
           <h2>
             Membership in Societies
-            <button class="add-btn" onclick="addMembership()">
+            <button class="add-btn" type="button" onclick="addMembership()">
               <i class="fas fa-plus"></i>
             </button>
           </h2>
@@ -531,7 +544,10 @@
               </p>
               <div class="offer-letter">
                 Offer Letter: <span class="file-name">None</span>
-                <button class="btn btn-sm btn-secondary upload-btn">
+                <button
+                  type="button"
+                  class="btn btn-sm btn-secondary upload-btn"
+                >
                   Upload
                 </button>
                 <input type="file" class="offer-file" style="display: none" />
@@ -983,7 +999,6 @@
       });
 
       //   Form Submission
-
       document
         .querySelector("form")
         .addEventListener("submit", async function (e) {
@@ -1251,17 +1266,14 @@
 
             // Call your save-user-data API with summary + email
             try {
-              const saveResponse = await fetch(
-                "https://api-i140.flyai.online/api-i140/save-user-data",
-                {
-                  method: "POST",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify({
-                    email: email,
-                    json_data: summary,
-                  }),
-                }
-              );
+              const saveResponse = await fetch("/save-user-data", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  email: email,
+                  json_data: summary,
+                }),
+              });
 
               const saveResult = await saveResponse.json();
               console.log("Save-user-data response:", saveResult);
