@@ -110,6 +110,59 @@ async def save_user_data(request: SaveUserDataRequest):
     finally:
         if conn:
             conn.close()
+            
+            
+# Fetch json3_process model
+class GetUserDataRequest(BaseModel):
+    rB: int  # this is your data_id
+
+@app.post("/get-user-data")
+async def get_user_data(request: GetUserDataRequest):
+    rB = request.rB
+
+    conn = get_db_connection()
+    if not conn:
+        return {
+            "status": "error",
+            "message": "Cannot connect to database. Check your DB credentials.",
+        }
+
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            """
+            SELECT json3_process
+            FROM i140users_data
+            WHERE data_id = %s
+            """,
+            (rB,),
+        )
+
+        row = cur.fetchone()
+        if not row:
+            return {
+                "status": "error",
+                "message": f"No record found for data_id {rB}.",
+            }
+
+        # Return the JSON column data
+        return {
+            "status": "success",
+            "data_id": rB,
+            "json_data": row["json3_process"],  # should already be JSON
+        }
+
+    except Exception as e:
+        if conn:
+            conn.rollback()
+        return {
+            "status": "error",
+            "message": str(e),
+        }
+
+    finally:
+        if conn:
+            conn.close()
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)

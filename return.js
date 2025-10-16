@@ -10,7 +10,7 @@ async function initialize() {
       return;
     }
 
-    // Adjust endpoint to include root_path from FastAPI server
+    // Check session status
     const response = await fetch(
       `https://api-i140.flyai.online/api-i140/session-status?session_id=${sessionId}`,
       {
@@ -21,9 +21,7 @@ async function initialize() {
       }
     );
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
+    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
     const session = await response.json();
 
@@ -34,11 +32,11 @@ async function initialize() {
     }
 
     if (session.status === "open") {
-      // Update redirect URL to match your frontend domain
       window.location.replace(
         "https://fly-ai-solutions.github.io/test_niw_cv/checkout.html"
-      ); // Replace with actual frontend URL
+      );
     } else if (session.status === "complete") {
+      // ✅ Only run this when payment is successfully completed
       const successElement = document.getElementById("success");
       const emailElement = document.getElementById("customer-email");
 
@@ -50,6 +48,33 @@ async function initialize() {
 
       successElement.classList.remove("hidden");
       emailElement.textContent = session.customer_email || "Not provided";
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const rB = urlParams.get("rB");
+      if (!rB) {
+        console.error("No rB found in URL");
+        showError("Missing data reference (rB).");
+        return;
+      }
+
+      const dataResponse = await fetch("http://127.0.0.1:8000/get-user-data", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ rB: parseInt(rB) }), // send rB in JSON body
+      });
+
+      if (!dataResponse.ok)
+        throw new Error(`Failed to fetch user data: ${dataResponse.status}`);
+
+      const result = await dataResponse.json();
+
+      if (result.status === "success" && result.json_data) {
+        const summary = result.json_data;
+        const output = document.getElementById("widgetFrame").contentWindow;
+        output.postMessage({ type: "updateSummary", data: summary }, "*");
+      } else {
+        showError(result.message || "Failed to load data.");
+      }
     } else {
       console.warn("Unexpected session status:", session.status);
       showError("Unexpected session status.");
@@ -60,16 +85,14 @@ async function initialize() {
   }
 }
 
-// Helper function to display errors (implement based on your UI)
 function showError(message) {
   const errorElement = document.getElementById("error-message");
   if (errorElement) {
     errorElement.textContent = message;
     errorElement.classList.remove("hidden");
   } else {
-    alert(message); // Fallback to alert if no error element exists
+    alert(message);
   }
 }
 
-// Initialize on page load
 initialize();
