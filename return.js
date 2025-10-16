@@ -57,11 +57,14 @@ async function initialize() {
         return;
       }
 
-      const dataResponse = await fetch("http://127.0.0.1:8000/get-user-data", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ rB: parseInt(rB) }), // send rB in JSON body
-      });
+      const dataResponse = await fetch(
+        "https://api-i140.flyai.online/api-i140/get-user-data",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ rB: parseInt(rB) }), // send rB in JSON body
+        }
+      );
 
       if (!dataResponse.ok)
         throw new Error(`Failed to fetch user data: ${dataResponse.status}`);
