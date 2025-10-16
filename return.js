@@ -36,7 +36,6 @@ async function initialize() {
         "https://fly-ai-solutions.github.io/test_niw_cv/checkout.html"
       );
     } else if (session.status === "complete") {
-      // ✅ Only run this when payment is successfully completed
       const successElement = document.getElementById("success");
       const emailElement = document.getElementById("customer-email");
 
@@ -62,7 +61,7 @@ async function initialize() {
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ rB: parseInt(rB) }), // send rB in JSON body
+          body: JSON.stringify({ rB: parseInt(rB) }),
         }
       );
 
