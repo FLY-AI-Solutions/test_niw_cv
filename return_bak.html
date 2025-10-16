@@ -7,7 +7,7 @@
       name="description"
       content="Confirmation page for Immigenius I-485 preparation payment"
     />
-    <title>Immigenius Payment Confirmation</title>
+    <title>NIW Eligibility Report</title>
     <link rel="stylesheet" href="style.css" />
     <script src="return.js" defer></script>
     <style>
@@ -39,36 +39,25 @@
       "
     />
     <header>
-      <h1 class="center">🤖 ImmI-GeniUS: Report</h1>
+       <h1 class="center"> ImmIGeniUS  </h1> 
     </header>
     <main>
       <section id="loading" aria-live="polite">
-      
+        <p>...</p>
       </section>
       <section id="success" class="hidden" aria-live="polite">
-        <!-- <h2>Thank You for Your Payment!</h2> -->
-        <p>
-          Best Wishes! Confirmation email will be sent to
-          <span id="customer-email">your email</span>.
-        </p>
-        
-        
-        <!-- <h3>Summary Widget:</h3> -->
+        <h2>NIW Eligibility Report - by ImmIGeniUS </h2>
+        <h3>Summary Widget:</h3>
         <iframe id="widgetFrame" src="niw_case_summary.html"></iframe>
-        <p>
-           If you have any questions, please email
-          <a href="mailto:support@immigenius.us">support@immigenius.us</a>.
-        </p>
-         </section>
+      </section>
+
       <section id="error-message" class="hidden" aria-live="polite">
         <h2>Oops, Something Went Wrong</h2>
         <p id="error-text">
-          An error occurred. Please try again or contact support.
-        </p>
-        <p>
-          Contact us at
+          An error occurred. Please try again or contact support. Contact us at
           <a href="mailto:support@immigenius.us">support@immigenius.us</a>.
         </p>
+        
       </section>
     </main>
   </body>
