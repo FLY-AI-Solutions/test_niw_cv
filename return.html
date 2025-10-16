@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Confirmation page for Immigenius I-485 preparation payment"
+      content="Confirmation page for Immigenius I-485 preparation payment & Report"
     />
-    <title>Immigenius Payment Confirmation</title>
+    <title>NIW Eligibility Report</title>
     <link rel="stylesheet" href="style.css" />
     <script src="return.js" defer></script>
     <style>
@@ -42,22 +42,23 @@
       <h1 class="center">Immigenius by FLY-AI-Solutions</h1>
     </header>
     <main>
-      <section id="loading" aria-live="polite">
+      <!-- <section id="loading" aria-live="polite">
         <p>Loading payment status...</p>
-      </section>
+      </section> -->
       <section id="success" class="hidden" aria-live="polite">
-        <h2>Thank You for Your Payment!</h2>
-        <p>
-          We appreciate your business! A confirmation email will be sent to
+        <h2>NIW Eligibility Report - by ImmIGeniUS</h2>
+        <!-- <p>
+           A confirmation email will be sent to
           <span id="customer-email">your email</span>.
-        </p>
-        <p>
+        </p> -->
+       
+
+        <!-- <h3>Summary Widget:</h3> -->
+        <iframe id="widgetFrame" src="niw_case_summary.html"></iframe>
+         <p>
           If you have any questions, please email
           <a href="mailto:support@immigenius.us">support@immigenius.us</a>.
         </p>
-
-        <h3>Summary Widget:</h3>
-        <iframe id="widgetFrame" src="niw_case_summary.html"></iframe>
       </section>
       <section id="error-message" class="hidden" aria-live="polite">
         <h2>Oops, Something Went Wrong</h2>
