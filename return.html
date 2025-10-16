@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Confirmation page for Immigenius I-485 preparation payment"
+    />
+    <title>Immigenius Payment Confirmation</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="return.js" defer></script>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f8f9fa;
+      }
+      iframe {
+        width: 100%;
+        height: 600px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <img
+      src="logo.png"
+      alt="Logo"
+      style="
+        position: absolute;
+        top: 2rem;
+        left: 2rem;
+        width: clamp(160px, 10vw, 120px);
+        height: auto;
+        max-width: 25vw;
+        opacity: 0.95;
+        object-fit: contain;
+      "
+    />
+    <header>
+      <h1 class="center">Immigenius by FLY-AI-Solutions</h1>
+    </header>
+    <main>
+      <section id="loading" aria-live="polite">
+      
+      </section>
+      <section id="success" class="hidden" aria-live="polite">
+        <h2>Thank You for Your Payment!</h2>
+        <p>
+          We appreciate your business! A confirmation email will be sent to
+          <span id="customer-email">your email</span>.
+        </p>
+        <p>
+           If you have any questions, please email
+          <a href="mailto:support@immigenius.us">support@immigenius.us</a>.
+        </p>
+        
+        <h3>Summary Widget:</h3>
+        <iframe id="widgetFrame" src="niw_case_summary.html"></iframe>
+         </section>
+      <section id="error-message" class="hidden" aria-live="polite">
+        <h2>Oops, Something Went Wrong</h2>
+        <p id="error-text">
+          An error occurred. Please try again or contact support.
+        </p>
+        <p>
+          Contact us at
+          <a href="mailto:support@immigenius.us">support@immigenius.us</a>.
+        </p>
+      </section>
+    </main>
+  </body>
+</html>
