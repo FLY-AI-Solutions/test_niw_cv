@@ -12,12 +12,18 @@ async function initialize() {
     const errorElement = document.getElementById("error-text");
     const errorSection = document.getElementById("error-message");
 
+    const urlParams = new URLSearchParams(window.location.search);
+    const rB = urlParams.get("rB");
+
+    console.log("rB value:", rB);
+
     const fetchClientSecret = async () => {
       const response = await fetch(
         "https://api-i140.flyai.online/api-i140/create-checkout-session",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ rB }),
         }
       );
 
