@@ -21,6 +21,11 @@
         border: 1px solid #ccc;
         border-radius: 10px;
       }
+      @media (max-width: 1024px) {
+        img[alt="Logo"] {
+          display: none !important;
+        }
+      }
     </style>
   </head>
   <body>
@@ -42,24 +47,21 @@
       <h1 class="center">🤖 ImmI-GeniUS: Report</h1>
     </header>
     <main>
-      <section id="loading" aria-live="polite">
-      
-      </section>
+      <section id="loading" aria-live="polite"></section>
       <section id="success" class="hidden" aria-live="polite">
         <!-- <h2>Thank You for Your Payment!</h2> -->
         <p>
           Best Wishes! Confirmation email will be sent to
           <span id="customer-email">your email</span>.
         </p>
-        
-        
+
         <!-- <h3>Summary Widget:</h3> -->
         <iframe id="widgetFrame" src="niw_case_summary.html"></iframe>
         <p>
-           If you have any questions, please email
+          If you have any questions, please email
           <a href="mailto:support@immigenius.us">support@immigenius.us</a>.
         </p>
-         </section>
+      </section>
       <section id="error-message" class="hidden" aria-live="polite">
         <h2>Oops, Something Went Wrong</h2>
         <p id="error-text">

@@ -12,18 +12,21 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
       rel="stylesheet"
     />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
 
     <style>
       /* CHANGED: Define new color variables for easy management */
       :root {
-          --primary-taupe: #B9B0A2;
-          --dark-charcoal: #1C1C1C;
-          --text-secondary: #525252;
-          --background-light: #FBFBFB;
-          --border-color: #EAEAEA;
+        --primary-taupe: #b9b0a2;
+        --dark-charcoal: #1c1c1c;
+        --text-secondary: #525252;
+        --background-light: #fbfbfb;
+        --border-color: #eaeaea;
       }
 
       #spinnerOverlay {
@@ -48,7 +51,7 @@
       body {
         /* CHANGED: Updated font, background, and text color */
         font-family: "Inter", sans-serif;
-        background-color: var(--background-light); 
+        background-color: var(--background-light);
         color: var(--dark-charcoal);
       }
       .header {
@@ -80,7 +83,7 @@
       }
       .section-final h2 {
         /* CHANGED: Contrasting color for final two sections */
-        border-bottom-color: var(--dark-charcoal); 
+        border-bottom-color: var(--dark-charcoal);
         color: var(--dark-charcoal);
       }
       .edit-btn,
@@ -88,18 +91,18 @@
         font-size: 0.8rem;
         cursor: pointer;
         margin-left: 8px;
-        color: #6c757d; 
+        color: #6c757d;
       }
       .edit-btn:hover {
         /* CHANGED: Hover color */
-        color: var(--dark-charcoal); 
+        color: var(--dark-charcoal);
       }
       .delete-btn:hover {
         color: #dc3545;
       }
       .add-btn {
         /* CHANGED: New color for the add button */
-        background-color: var(--primary-taupe); 
+        background-color: var(--primary-taupe);
         color: white;
         border: none;
         width: 30px;
@@ -161,16 +164,16 @@
       }
       /* ADDED: Style for main submit button */
       .btn-submit {
-          background-color: var(--dark-charcoal);
-          color: white;
-          border: 1px solid var(--dark-charcoal);
-          padding: 0.5rem 2rem;
-          font-weight: 500;
-          transition: background-color 0.2s ease;
+        background-color: var(--dark-charcoal);
+        color: white;
+        border: 1px solid var(--dark-charcoal);
+        padding: 0.5rem 2rem;
+        font-weight: 500;
+        transition: background-color 0.2s ease;
       }
       .btn-submit:hover {
-          background-color: #333;
-          color: white;
+        background-color: #333;
+        color: white;
       }
       .offer-letter,
       .experience-dates,
@@ -193,448 +196,453 @@
         border-top: 1px solid #dee2e6;
         margin-top: 40px;
       }
+      @media (max-width: 1024px) {
+        img[alt="Logo"] {
+          display: none !important;
+        }
+      }
     </style>
   </head>
   <body>
     <img
-      src="immigenius-logo.png" 
+      src="immigenius-logo.png"
       alt="Logo"
       style="
         position: absolute;
         top: 2rem;
         left: 2rem;
-        width: 150px; 
+        width: 150px;
         height: auto;
       "
     />
     <form>
-        <header class="header">
+      <header class="header">
         <h1>
-            <span id="name" class="editable" contenteditable="true"
+          <span id="name" class="editable" contenteditable="true"
             >John Doe</span
-            >
-            <i
+          >
+          <i
             class="fas fa-edit edit-btn"
             onclick="document.getElementById('name').focus();"
-            ></i>
+          ></i>
         </h1>
         <h4>
-            <span id="email" class="editable" contenteditable="true"
+          <span id="email" class="editable" contenteditable="true"
             >johndoe@gmail.com</span
-            >
-            <i
+          >
+          <i
             class="fas fa-edit edit-btn"
             onclick="document.getElementById('email').focus();"
-            ></i>
-            <span class="fs-6 text-secondary lead"
+          ></i>
+          <span class="fs-6 text-secondary lead"
             >(Your email will be your ID)</span
-            >
+          >
         </h4>
         <p>
-            <span id="degree" class="editable" contenteditable="true"
+          <span id="degree" class="editable" contenteditable="true"
             >Ph.D. in Computer Science, Stanford University</span
-            >
-            <i
+          >
+          <i
             class="fas fa-edit edit-btn"
             onclick="document.getElementById('degree').focus();"
-            ></i>
-            (WES Evaluation:
-            <select id="wes" class="form-select-sm">
+          ></i>
+          (WES Evaluation:
+          <select id="wes" class="form-select-sm">
             <option value="YES" selected>YES</option>
             <option value="NO">NO</option>
             <option value="NotRequired">Not Required</option></select
-            >)
+          >)
         </p>
-        </header>
+      </header>
 
-        <div class="container">
+      <div class="container">
         <section class="section" id="degrees-section">
-            <h2>
+          <h2>
             Academic Degrees
             <button class="add-btn" type="button" onclick="addDegree()">
-                <i class="fas fa-plus"></i>
+              <i class="fas fa-plus"></i>
             </button>
-            </h2>
-            <div id="degrees-list">
+          </h2>
+          <div id="degrees-list">
             <div class="item">
-                <p class="editable" contenteditable="true">
+              <p class="editable" contenteditable="true">
                 Ph.D. in Computer Science, Stanford University
-                </p>
-                <select class="year-select form-select-sm"></select>
-                <div class="item-controls">
+              </p>
+              <select class="year-select form-select-sm"></select>
+              <div class="item-controls">
                 <i class="fas fa-edit edit-btn" title="Edit"></i>
                 <i class="fas fa-trash delete-btn" title="Delete"></i>
-                </div>
+              </div>
             </div>
-            </div>
+          </div>
         </section>
 
         <section class="section" id="awards-section">
-            <h2>
-              Awards
-              <button class="add-btn" type="button" onclick="addAward()">
-                <i class="fas fa-plus"></i>
-              </button>
-            </h2>
-            <div id="awards-list">
-              <div class="item">
-                <p class="editable" contenteditable="true">
-                  Best Paper Award, ACM Conference
-                </p>
-                <select class="award-type-select form-select-sm">
-                  <option value="International" selected>International</option>
-                  <option value="National US">National (US)</option>
-                  <option value="National Other">National (Other)</option>
-                </select>
-                <select class="year-select form-select-sm"></select>
-                <div class="item-controls">
-                  <i class="fas fa-edit edit-btn" title="Edit"></i>
-                  <i class="fas fa-trash delete-btn" title="Delete"></i>
-                </div>
+          <h2>
+            Awards
+            <button class="add-btn" type="button" onclick="addAward()">
+              <i class="fas fa-plus"></i>
+            </button>
+          </h2>
+          <div id="awards-list">
+            <div class="item">
+              <p class="editable" contenteditable="true">
+                Best Paper Award, ACM Conference
+              </p>
+              <select class="award-type-select form-select-sm">
+                <option value="International" selected>International</option>
+                <option value="National US">National (US)</option>
+                <option value="National Other">National (Other)</option>
+              </select>
+              <select class="year-select form-select-sm"></select>
+              <div class="item-controls">
+                <i class="fas fa-edit edit-btn" title="Edit"></i>
+                <i class="fas fa-trash delete-btn" title="Delete"></i>
               </div>
             </div>
+          </div>
         </section>
 
         <section class="section" id="journals-section">
-            <h2>
-                Journal Articles
-                <button class="add-btn" type="button" onclick="addJournal()">
-                <i class="fas fa-plus"></i>
-                </button>
-            </h2>
-            <div id="journals-list">
-                <div class="item">
-                <p class="editable" contenteditable="true">
-                    Article 1: "Advancements in AI", Journal of Machine Learning
-                </p>
-                <select class="year-select form-select-sm"></select>
-                <div class="item-controls">
-                    <i class="fas fa-edit edit-btn" title="Edit"></i>
-                    <i class="fas fa-trash delete-btn" title="Delete"></i>
-                </div>
-                </div>
+          <h2>
+            Journal Articles
+            <button class="add-btn" type="button" onclick="addJournal()">
+              <i class="fas fa-plus"></i>
+            </button>
+          </h2>
+          <div id="journals-list">
+            <div class="item">
+              <p class="editable" contenteditable="true">
+                Article 1: "Advancements in AI", Journal of Machine Learning
+              </p>
+              <select class="year-select form-select-sm"></select>
+              <div class="item-controls">
+                <i class="fas fa-edit edit-btn" title="Edit"></i>
+                <i class="fas fa-trash delete-btn" title="Delete"></i>
+              </div>
             </div>
+          </div>
         </section>
 
         <section class="section" id="conferences-section">
-            <h2>
-                Conference Presentations
-                <button class="add-btn" type="button" onclick="addConference()">
-                <i class="fas fa-plus"></i>
-                </button>
-            </h2>
-            <div id="conferences-list">
-                <div class="item">
-                <p class="editable" contenteditable="true">
-                    Presentation 1: "AI Ethics", NeurIPS
-                </p>
-                <select class="year-select form-select-sm"></select>
-                <div class="item-controls">
-                    <i class="fas fa-edit edit-btn" title="Edit"></i>
-                    <i class="fas fa-trash delete-btn" title="Delete"></i>
-                </div>
-                </div>
+          <h2>
+            Conference Presentations
+            <button class="add-btn" type="button" onclick="addConference()">
+              <i class="fas fa-plus"></i>
+            </button>
+          </h2>
+          <div id="conferences-list">
+            <div class="item">
+              <p class="editable" contenteditable="true">
+                Presentation 1: "AI Ethics", NeurIPS
+              </p>
+              <select class="year-select form-select-sm"></select>
+              <div class="item-controls">
+                <i class="fas fa-edit edit-btn" title="Edit"></i>
+                <i class="fas fa-trash delete-btn" title="Delete"></i>
+              </div>
             </div>
+          </div>
         </section>
 
         <section class="section" id="media-coverage-section">
-            <h2>
-                Media Coverage
-                <button class="add-btn" type="button" onclick="addMediaCoverage()">
-                <i class="fas fa-plus"></i>
-                </button>
-            </h2>
-            <div id="media_coverage-list">
-                <div class="item">
-                <div class="flex-grow-1">
-                    <p class="editable" contenteditable="true">
-                    "Breakthrough in AI Research", Tech Journal
-                    </p>
-                    <div class="offer-letter">
-                    File: <span class="file-name">None</span>
-                    <button
-                        type="button"
-                        class="btn btn-sm btn-secondary upload-btn"
-                    >
-                        Upload PDF
-                    </button>
-                    <input
-                        type="file"
-                        class="offer-file"
-                        style="display: none"
-                        accept=".pdf"
-                    />
-                    </div>
+          <h2>
+            Media Coverage
+            <button class="add-btn" type="button" onclick="addMediaCoverage()">
+              <i class="fas fa-plus"></i>
+            </button>
+          </h2>
+          <div id="media_coverage-list">
+            <div class="item">
+              <div class="flex-grow-1">
+                <p class="editable" contenteditable="true">
+                  "Breakthrough in AI Research", Tech Journal
+                </p>
+                <div class="offer-letter">
+                  File: <span class="file-name">None</span>
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-secondary upload-btn"
+                  >
+                    Upload PDF
+                  </button>
+                  <input
+                    type="file"
+                    class="offer-file"
+                    style="display: none"
+                    accept=".pdf"
+                  />
                 </div>
-                <select class="year-select form-select-sm"></select>
-                <div class="item-controls">
-                    <i class="fas fa-edit edit-btn" title="Edit"></i>
-                    <i class="fas fa-trash delete-btn" title="Delete"></i>
-                </div>
-                </div>
+              </div>
+              <select class="year-select form-select-sm"></select>
+              <div class="item-controls">
+                <i class="fas fa-edit edit-btn" title="Edit"></i>
+                <i class="fas fa-trash delete-btn" title="Delete"></i>
+              </div>
             </div>
+          </div>
         </section>
 
         <section class="section" id="scholar-profile-section">
-            <h2>Scholarly Profile</h2>
-            <div id="scholar-profile-list">
-                <div class="item">
-                <p class="editable" contenteditable="true">
-                    <strong>Google Scholar Profile:</strong>
-                    <a href="#" contenteditable="false"
-                    >https://scholar.google.com/citations?user=your_id</a
-                    >
-                </p>
-                <div class="item-controls">
-                    <i class="fas fa-edit edit-btn" title="Edit"></i>
-                </div>
-                </div>
-                <div class="item">
-                <p class="editable" contenteditable="true">
-                    <strong>Total Citations:</strong> 1500
-                </p>
-                <div class="item-controls">
-                    <i class="fas fa-edit edit-btn" title="Edit"></i>
-                </div>
-                </div>
+          <h2>Scholarly Profile</h2>
+          <div id="scholar-profile-list">
+            <div class="item">
+              <p class="editable" contenteditable="true">
+                <strong>Google Scholar Profile:</strong>
+                <a href="#" contenteditable="false"
+                  >https://scholar.google.com/citations?user=your_id</a
+                >
+              </p>
+              <div class="item-controls">
+                <i class="fas fa-edit edit-btn" title="Edit"></i>
+              </div>
             </div>
+            <div class="item">
+              <p class="editable" contenteditable="true">
+                <strong>Total Citations:</strong> 1500
+              </p>
+              <div class="item-controls">
+                <i class="fas fa-edit edit-btn" title="Edit"></i>
+              </div>
+            </div>
+          </div>
         </section>
 
         <section class="section" id="patents-books-section">
-            <h2>
-                Patents or Books
-                <button class="add-btn" type="button" onclick="addPatentOrBook()">
-                <i class="fas fa-plus"></i>
-                </button>
-            </h2>
-            <div id="patents_books-list">
-                <div class="item">
-                <p class="editable" contenteditable="true">
-                    Patent US123456: "Method for AI-driven data analysis"
-                </p>
-                <select class="year-select form-select-sm"></select>
-                <div class="item-controls">
-                    <i class="fas fa-edit edit-btn" title="Edit"></i>
-                    <i class="fas fa-trash delete-btn" title="Delete"></i>
-                </div>
-                </div>
+          <h2>
+            Patents or Books
+            <button class="add-btn" type="button" onclick="addPatentOrBook()">
+              <i class="fas fa-plus"></i>
+            </button>
+          </h2>
+          <div id="patents_books-list">
+            <div class="item">
+              <p class="editable" contenteditable="true">
+                Patent US123456: "Method for AI-driven data analysis"
+              </p>
+              <select class="year-select form-select-sm"></select>
+              <div class="item-controls">
+                <i class="fas fa-edit edit-btn" title="Edit"></i>
+                <i class="fas fa-trash delete-btn" title="Delete"></i>
+              </div>
             </div>
+          </div>
         </section>
 
         <section class="section" id="projects-section">
-            <h2>
-                Projects
-                <button class="add-btn" type="button" onclick="addProject()">
-                <i class="fas fa-plus"></i>
-                </button>
-            </h2>
-            <div id="projects-list">
-                <div
-                class="item flex-column align-items-start"
-                data-journals="1"
-                data-conferences="1"
-                data-awards="1"
-                data-degrees="1"
-                data-media_coverage="1"
-                data-patents_books="1"
+          <h2>
+            Projects
+            <button class="add-btn" type="button" onclick="addProject()">
+              <i class="fas fa-plus"></i>
+            </button>
+          </h2>
+          <div id="projects-list">
+            <div
+              class="item flex-column align-items-start"
+              data-journals="1"
+              data-conferences="1"
+              data-awards="1"
+              data-degrees="1"
+              data-media_coverage="1"
+              data-patents_books="1"
+            >
+              <p class="editable" contenteditable="true">
+                Project 1: AI for Healthcare - Aiming to revolutionize
+                diagnostics in the US.
+              </p>
+              <div class="connections">
+                <button
+                  type="button"
+                  class="btn btn-outline-dark connect-btn"
+                  data-type="degrees"
                 >
-                <p class="editable" contenteditable="true">
-                    Project 1: AI for Healthcare - Aiming to revolutionize
-                    diagnostics in the US.
-                </p>
-                <div class="connections">
-                    <button
-                    type="button"
-                    class="btn btn-outline-dark connect-btn" 
-                    data-type="degrees"
-                    >
-                    Degrees (none)
-                    </button>
-                    <button
-                    type="button"
-                    class="btn btn-outline-dark connect-btn"
-                    data-type="journals"
-                    >
-                    Journal Articles (none)
-                    </button>
-                    <button
-                    type="button"
-                    class="btn btn-outline-dark connect-btn"
-                    data-type="conferences"
-                    >
-                    Conference Presentations (none)
-                    </button>
-                    <button
-                    type="button"
-                    class="btn btn-outline-dark connect-btn"
-                    data-type="media_coverage"
-                    >
-                    Media Coverage (none)
-                    </button>
-                    <button
-                    type="button"
-                    class="btn btn-outline-dark connect-btn"
-                    data-type="patents_books"
-                    >
-                    Patents/Books (none)
-                    </button>
-                    <button
-                    type="button"
-                    class="btn btn-outline-dark connect-btn"
-                    data-type="awards"
-                    >
-                    Awards (none)
-                    </button>
-                </div>
-                <div class="item-controls">
-                    <i class="fas fa-edit edit-btn" title="Edit"></i>
-                    <i class="fas fa-trash delete-btn" title="Delete"></i>
-                </div>
-                </div>
+                  Degrees (none)
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-outline-dark connect-btn"
+                  data-type="journals"
+                >
+                  Journal Articles (none)
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-outline-dark connect-btn"
+                  data-type="conferences"
+                >
+                  Conference Presentations (none)
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-outline-dark connect-btn"
+                  data-type="media_coverage"
+                >
+                  Media Coverage (none)
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-outline-dark connect-btn"
+                  data-type="patents_books"
+                >
+                  Patents/Books (none)
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-outline-dark connect-btn"
+                  data-type="awards"
+                >
+                  Awards (none)
+                </button>
+              </div>
+              <div class="item-controls">
+                <i class="fas fa-edit edit-btn" title="Edit"></i>
+                <i class="fas fa-trash delete-btn" title="Delete"></i>
+              </div>
             </div>
+          </div>
         </section>
 
         <section class="section" id="experience-section">
-            <h2>
-                Professional Experience
-                <button class="add-btn" type="button" onclick="addExperience()">
-                <i class="fas fa-plus"></i>
-                </button>
-            </h2>
-            <div id="experience-list">
-                <div class="item flex-column align-items-start">
-                <div class="editable w-100">
-                    <p contenteditable="true">
-                    <strong>Research Scientist</strong> at
-                    <strong>Tech Corp</strong>
-                    </p>
-                    <p contenteditable="true" style="font-size: 0.9rem">
-                    Led AI research teams, managed projects, and published papers
-                    on machine learning advancements.
-                    </p>
+          <h2>
+            Professional Experience
+            <button class="add-btn" type="button" onclick="addExperience()">
+              <i class="fas fa-plus"></i>
+            </button>
+          </h2>
+          <div id="experience-list">
+            <div class="item flex-column align-items-start">
+              <div class="editable w-100">
+                <p contenteditable="true">
+                  <strong>Research Scientist</strong> at
+                  <strong>Tech Corp</strong>
+                </p>
+                <p contenteditable="true" style="font-size: 0.9rem">
+                  Led AI research teams, managed projects, and published papers
+                  on machine learning advancements.
+                </p>
+              </div>
+              <div class="experience-dates">
+                <div>
+                  <label class="form-label-sm me-1">From:</label>
+                  <select class="year-select form-select-sm"></select>
                 </div>
-                <div class="experience-dates">
-                    <div>
-                    <label class="form-label-sm me-1">From:</label>
-                    <select class="year-select form-select-sm"></select>
-                    </div>
-                    <div>
-                    <label class="form-label-sm me-1">To:</label>
-                    <select class="year-select-current form-select-sm"></select>
-                    </div>
+                <div>
+                  <label class="form-label-sm me-1">To:</label>
+                  <select class="year-select-current form-select-sm"></select>
                 </div>
-                <div class="item-controls">
-                    <i class="fas fa-edit edit-btn" title="Edit"></i>
-                    <i class="fas fa-trash delete-btn" title="Delete"></i>
-                </div>
-                </div>
+              </div>
+              <div class="item-controls">
+                <i class="fas fa-edit edit-btn" title="Edit"></i>
+                <i class="fas fa-trash delete-btn" title="Delete"></i>
+              </div>
             </div>
+          </div>
         </section>
 
         <section class="section" id="education-summary-section">
-            <h2>
-                Education Summary
-                <button
-                class="add-btn"
-                type="button"
-                onclick="addEducationSummary()"
-                >
-                <i class="fas fa-plus"></i>
-                </button>
-            </h2>
-            <div id="education-summary-list">
-                <div class="item flex-column align-items-start">
-                <p class="editable" contenteditable="true">
-                    <strong>Highest Degree:</strong> Ph.D. in Computer Science from
-                    Stanford University
-                </p>
-                <div class="education-date">
-                    <label class="form-label-sm me-2">Date of Completion:</label>
-                    <select class="year-select form-select-sm me-2"></select>
-                    <input type="date" class="form-control-sm" />
-                </div>
-                <div class="item-controls">
-                    <i class="fas fa-edit edit-btn" title="Edit"></i>
-                    <i class="fas fa-trash delete-btn" title="Delete"></i>
-                </div>
-                </div>
+          <h2>
+            Education Summary
+            <button
+              class="add-btn"
+              type="button"
+              onclick="addEducationSummary()"
+            >
+              <i class="fas fa-plus"></i>
+            </button>
+          </h2>
+          <div id="education-summary-list">
+            <div class="item flex-column align-items-start">
+              <p class="editable" contenteditable="true">
+                <strong>Highest Degree:</strong> Ph.D. in Computer Science from
+                Stanford University
+              </p>
+              <div class="education-date">
+                <label class="form-label-sm me-2">Date of Completion:</label>
+                <select class="year-select form-select-sm me-2"></select>
+                <input type="date" class="form-control-sm" />
+              </div>
+              <div class="item-controls">
+                <i class="fas fa-edit edit-btn" title="Edit"></i>
+                <i class="fas fa-trash delete-btn" title="Delete"></i>
+              </div>
             </div>
+          </div>
         </section>
 
         <section class="section" id="memberships-section">
-            <h2>
-                Membership in Societies
-                <button class="add-btn" type="button" onclick="addMembership()">
-                <i class="fas fa-plus"></i>
-                </button>
-            </h2>
-            <div id="memberships-list">
-                <div class="item">
-                <p class="editable" contenteditable="true">
-                    Member, IEEE Computer Society
-                </p>
-                <div class="item-controls">
-                    <i class="fas fa-edit edit-btn" title="Edit"></i>
-                    <i class="fas fa-trash delete-btn" title="Delete"></i>
-                </div>
-                </div>
+          <h2>
+            Membership in Societies
+            <button class="add-btn" type="button" onclick="addMembership()">
+              <i class="fas fa-plus"></i>
+            </button>
+          </h2>
+          <div id="memberships-list">
+            <div class="item">
+              <p class="editable" contenteditable="true">
+                Member, IEEE Computer Society
+              </p>
+              <div class="item-controls">
+                <i class="fas fa-edit edit-btn" title="Edit"></i>
+                <i class="fas fa-trash delete-btn" title="Delete"></i>
+              </div>
             </div>
+          </div>
         </section>
 
         <section class="section section-final" id="future-positions-section">
-            <h2>Potential Future Positions</h2>
-            <div id="future-positions-list">
-                <div class="item flex-column align-items-start">
-                <p class="editable" contenteditable="true">
-                    Senior AI Researcher at Google: Focusing on advanced ML models.
-                </p>
-                <div class="offer-letter">
-                    Offer Letter: <span class="file-name">None</span>
-                    <button
-                    type="button"
-                    class="btn btn-sm btn-secondary upload-btn"
-                    >
-                    Upload
-                    </button>
-                    <input type="file" class="offer-file" style="display: none" />
-                </div>
-                <div class="item-controls">
-                    <i class="fas fa-edit edit-btn" title="Edit"></i>
-                    <i class="fas fa-trash delete-btn" title="Delete"></i>
-                </div>
-                </div>
+          <h2>Potential Future Positions</h2>
+          <div id="future-positions-list">
+            <div class="item flex-column align-items-start">
+              <p class="editable" contenteditable="true">
+                Senior AI Researcher at Google: Focusing on advanced ML models.
+              </p>
+              <div class="offer-letter">
+                Offer Letter: <span class="file-name">None</span>
+                <button
+                  type="button"
+                  class="btn btn-sm btn-secondary upload-btn"
+                >
+                  Upload
+                </button>
+                <input type="file" class="offer-file" style="display: none" />
+              </div>
+              <div class="item-controls">
+                <i class="fas fa-edit edit-btn" title="Edit"></i>
+                <i class="fas fa-trash delete-btn" title="Delete"></i>
+              </div>
             </div>
+          </div>
         </section>
 
         <section class="section section-final" id="future-endeavor-section">
-            <h2>Proposed Future Endeavor in the US</h2>
-            <div id="future-endeavor-list">
-                <div class="item">
-                <p
-                    class="editable"
-                    contenteditable="true"
-                    style="min-height: 100px"
-                >
-                    My proposed endeavor involves developing novel machine learning
-                    algorithms to address challenges in sustainable energy systems.
-                    I plan to establish a research lab that collaborates with both
-                    academic institutions and industry leaders to create AI-driven
-                    solutions for optimizing renewable energy grids and reducing
-                    carbon footprints. This work will contribute significantly to
-                    the United States' goals for technological innovation and
-                    environmental stewardship.
-                </p>
-                <div class="item-controls">
-                    <i class="fas fa-edit edit-btn" title="Edit"></i>
-                </div>
-                </div>
+          <h2>Proposed Future Endeavor in the US</h2>
+          <div id="future-endeavor-list">
+            <div class="item">
+              <p
+                class="editable"
+                contenteditable="true"
+                style="min-height: 100px"
+              >
+                My proposed endeavor involves developing novel machine learning
+                algorithms to address challenges in sustainable energy systems.
+                I plan to establish a research lab that collaborates with both
+                academic institutions and industry leaders to create AI-driven
+                solutions for optimizing renewable energy grids and reducing
+                carbon footprints. This work will contribute significantly to
+                the United States' goals for technological innovation and
+                environmental stewardship.
+              </p>
+              <div class="item-controls">
+                <i class="fas fa-edit edit-btn" title="Edit"></i>
+              </div>
             </div>
+          </div>
         </section>
 
         <div class="d-flex justify-content-end mb-5">
-            <button type="submit" class="btn btn-submit">Submit</button>
+          <button type="submit" class="btn btn-submit">Submit</button>
         </div>
-        </div>
+      </div>
     </form>
 
     <div
@@ -644,36 +652,36 @@
       aria-labelledby="connectModalLabel"
       aria-hidden="true"
     >
-        <div class="modal-dialog">
-            <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="connectModalLabel">Select Items</h5>
-                <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-                ></button>
-            </div>
-            <div class="modal-body" id="modal-body"></div>
-            <div class="modal-footer">
-                <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-                >
-                Close
-                </button>
-                <button
-                type="button"
-                class="btn btn-primary"
-                onclick="saveSelections()"
-                >
-                Save
-                </button>
-            </div>
-            </div>
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="connectModalLabel">Select Items</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body" id="modal-body"></div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              onclick="saveSelections()"
+            >
+              Save
+            </button>
+          </div>
         </div>
+      </div>
     </div>
     <div
       id="spinnerOverlay"
@@ -705,7 +713,7 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
+
     <script>
       let currentType = "";
       let currentProject = null;
