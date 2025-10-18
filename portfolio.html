@@ -1302,7 +1302,7 @@
           const merge_json =
             JSON.stringify(INPUT_JSON_1, null, 2) +
             JSON.stringify(INPUT_JSON_2, null, 2);
-          console.log(merge_json);
+          //console.log();merge_json
 
           // Fetch function
           const messageBox = document.getElementById("agentMessages");
@@ -1348,7 +1348,7 @@
             }
 
             spinner.style.display = "none";
-            console.log("Summary:", summary);
+            //console.log("Summary:", summary);
 
             const email = INPUT_JSON_1.applicant_profile.email;
             console.log(email);
@@ -1368,7 +1368,7 @@
               );
 
               const saveResult = await saveResponse.json();
-              console.log("Save-user-data response:", saveResult);
+              //console.log("Save-user-data response:", saveResult);
 
               if (saveResult.status !== "success") {
                 console.warn(
