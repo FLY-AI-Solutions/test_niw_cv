@@ -98,3 +98,121 @@ function showError(message) {
 }
 
 initialize();
+
+// Save PDF
+document.addEventListener("DOMContentLoaded", () => {
+  const pdfButton = document
+    .querySelector(".bi-file-earmark-pdf")
+    ?.closest("button");
+  const iframe = document.getElementById("widgetFrame");
+
+  pdfButton?.addEventListener("click", async () => {
+    try {
+      const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+
+      // clone iframe content into hidden div
+      const tempDiv = document.createElement("div");
+      tempDiv.innerHTML = iframeDoc.documentElement.innerHTML;
+      tempDiv.style.position = "absolute";
+      tempDiv.style.left = "-9999px";
+      tempDiv.style.background = "#fff";
+      tempDiv.style.padding = "20px";
+      tempDiv.style.width = iframe.clientWidth + "px";
+      document.body.appendChild(tempDiv);
+
+      await new Promise((r) => setTimeout(r, 300));
+
+      // capture with html2canvas
+      const canvas = await html2canvas(tempDiv, {
+        scale: 1.2,
+        backgroundColor: "#ffffff",
+        useCORS: true,
+        logging: false,
+      });
+
+      document.body.removeChild(tempDiv);
+
+      const { jsPDF } = window.jspdf;
+      const pdf = new jsPDF("p", "pt", "a4");
+      const pageWidth = pdf.internal.pageSize.getWidth();
+      const pageHeight = pdf.internal.pageSize.getHeight();
+      const margin = 25;
+
+      const imgWidth = pageWidth - margin * 2;
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+      let position = margin;
+      let remainingHeight = imgHeight;
+      let yOffset = 0;
+
+      const imgData = canvas.toDataURL("image/jpeg", 0.65);
+
+      // loop pages cleanly
+      while (remainingHeight > 0) {
+        const pageCanvas = document.createElement("canvas");
+        pageCanvas.width = canvas.width;
+        pageCanvas.height = Math.min(
+          canvas.height - yOffset,
+          (pageHeight - margin * 2) * (canvas.width / imgWidth)
+        );
+
+        const ctx = pageCanvas.getContext("2d");
+        ctx.drawImage(
+          canvas,
+          0,
+          yOffset,
+          canvas.width,
+          pageCanvas.height,
+          0,
+          0,
+          canvas.width,
+          pageCanvas.height
+        );
+
+        const pageData = pageCanvas.toDataURL("image/jpeg", 0.65);
+        pdf.addImage(
+          pageData,
+          "JPEG",
+          margin,
+          margin,
+          imgWidth,
+          (pageCanvas.height * imgWidth) / canvas.width
+        );
+
+        yOffset += pageCanvas.height;
+        remainingHeight -= (pageCanvas.height * imgWidth) / canvas.width;
+
+        if (remainingHeight > 0) pdf.addPage();
+      }
+
+      // disclaimer page
+      pdf.addPage();
+      pdf.setFont("helvetica", "bolditalic");
+      pdf.setFontSize(16);
+      pdf.setTextColor(40, 40, 40);
+      pdf.text("Disclaimer", margin, 100);
+
+      pdf.setFont("helvetica", "italic");
+      pdf.setFontSize(12);
+      pdf.setTextColor(80, 80, 80);
+      const disclaimer = `
+        This report has been generated automatically using AI reasoning 
+        based on patterns and examples derived from National Interest 
+        Waiver (NIW) case studies.
+
+        It is intended for informational and educational purposes only 
+        and should not be considered legal advice or a substitute for 
+        professional immigration counsel.
+
+        For specific legal concerns, consult a qualified immigration 
+        attorney.
+      `;
+      pdf.text(disclaimer, margin, 130, { maxWidth: pageWidth - margin * 2 });
+
+      pdf.save("Immigenius_Report.pdf");
+    } catch (err) {
+      console.error("PDF generation failed:", err);
+      alert("Failed to generate PDF. Please try again.");
+    }
+  });
+});
