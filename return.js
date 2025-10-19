@@ -216,7 +216,8 @@ document.addEventListener("DOMContentLoaded", () => {
       pdf.setTextColor(50, 50, 50);
       pdf.text(`Reference ID: #${rB}`, margin, 200);
 
-      pdf.save("Immigenius_Report.pdf");
+      const filename = `Immigenius_Report#${rB}.pdf`;
+      pdf.save(filename);
     } catch (err) {
       console.error("PDF generation failed:", err);
       alert("Failed to generate PDF. Check console for details.");
