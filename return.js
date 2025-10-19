@@ -99,7 +99,7 @@ function showError(message) {
 
 initialize();
 
-// Save PDF
+// ---------------- PDF Generation ----------------
 document.addEventListener("DOMContentLoaded", () => {
   const pdfButton = document
     .querySelector(".bi-file-earmark-pdf")
@@ -108,53 +108,62 @@ document.addEventListener("DOMContentLoaded", () => {
 
   pdfButton?.addEventListener("click", async () => {
     try {
+      // Wait for iframe to load fully
+      if (!iframe.contentDocument || !iframe.contentDocument.body) {
+        await new Promise((resolve) =>
+          iframe.addEventListener("load", resolve)
+        );
+      }
+
       const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
 
-      // clone iframe content into hidden div
+      // Clone content into temp div to avoid CORS / iframe issues
       const tempDiv = document.createElement("div");
-      tempDiv.innerHTML = iframeDoc.documentElement.innerHTML;
       tempDiv.style.position = "absolute";
       tempDiv.style.left = "-9999px";
       tempDiv.style.background = "#fff";
       tempDiv.style.padding = "20px";
       tempDiv.style.width = iframe.clientWidth + "px";
+      tempDiv.innerHTML = iframeDoc.documentElement.innerHTML;
       document.body.appendChild(tempDiv);
 
-      await new Promise((r) => setTimeout(r, 300));
+      // Give time for images/fonts to load
+      await new Promise((r) => setTimeout(r, 500));
 
-      // capture with html2canvas
       const canvas = await html2canvas(tempDiv, {
         scale: 1.2,
-        backgroundColor: "#ffffff",
+        backgroundColor: "#fff",
         useCORS: true,
         logging: false,
       });
 
       document.body.removeChild(tempDiv);
 
+      if (!canvas.width || !canvas.height) throw new Error("Canvas is empty!");
+
       const { jsPDF } = window.jspdf;
       const pdf = new jsPDF("p", "pt", "a4");
+
       const pageWidth = pdf.internal.pageSize.getWidth();
       const pageHeight = pdf.internal.pageSize.getHeight();
-      const margin = 25;
+      const margin = 20;
 
-      const imgWidth = pageWidth - margin * 2;
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      const imgWidth = Math.floor(pageWidth - margin * 2);
+      const imgScale = imgWidth / canvas.width;
 
-      let position = margin;
-      let remainingHeight = imgHeight;
       let yOffset = 0;
+      while (yOffset < canvas.height) {
+        // Calculate portion height for this page
+        const remainingHeightPx = canvas.height - yOffset;
+        const pageCanvasHeightPx = Math.min(
+          remainingHeightPx,
+          (pageHeight - margin * 2) / imgScale
+        );
 
-      const imgData = canvas.toDataURL("image/jpeg", 0.65);
-
-      // loop pages cleanly
-      while (remainingHeight > 0) {
+        // Draw portion into new canvas
         const pageCanvas = document.createElement("canvas");
         pageCanvas.width = canvas.width;
-        pageCanvas.height = Math.min(
-          canvas.height - yOffset,
-          (pageHeight - margin * 2) * (canvas.width / imgWidth)
-        );
+        pageCanvas.height = pageCanvasHeightPx;
 
         const ctx = pageCanvas.getContext("2d");
         ctx.drawImage(
@@ -162,30 +171,30 @@ document.addEventListener("DOMContentLoaded", () => {
           0,
           yOffset,
           canvas.width,
-          pageCanvas.height,
+          pageCanvasHeightPx,
           0,
           0,
           canvas.width,
-          pageCanvas.height
+          pageCanvasHeightPx
         );
 
-        const pageData = pageCanvas.toDataURL("image/jpeg", 0.65);
+        const imgData = pageCanvas.toDataURL("image/jpeg", 0.6); // compressed AF
+
         pdf.addImage(
-          pageData,
+          imgData,
           "JPEG",
           margin,
           margin,
           imgWidth,
-          (pageCanvas.height * imgWidth) / canvas.width
+          pageCanvasHeightPx * imgScale
         );
 
-        yOffset += pageCanvas.height;
-        remainingHeight -= (pageCanvas.height * imgWidth) / canvas.width;
+        yOffset += pageCanvasHeightPx;
 
-        if (remainingHeight > 0) pdf.addPage();
+        if (yOffset < canvas.height) pdf.addPage();
       }
 
-      // disclaimer page
+      // Add disclaimer page
       pdf.addPage();
       pdf.setFont("helvetica", "bolditalic");
       pdf.setFontSize(16);
@@ -196,23 +205,19 @@ document.addEventListener("DOMContentLoaded", () => {
       pdf.setFontSize(12);
       pdf.setTextColor(80, 80, 80);
       const disclaimer = `
-        This report has been generated automatically using AI reasoning 
-        based on patterns and examples derived from National Interest 
-        Waiver (NIW) case studies.
+This report has been generated automatically using AI reasoning 
+based on patterns derived from National Interest Waiver (NIW) cases.
 
-        It is intended for informational and educational purposes only 
-        and should not be considered legal advice or a substitute for 
-        professional immigration counsel.
+It is for informational purposes only and is NOT legal advice.
 
-        For specific legal concerns, consult a qualified immigration 
-        attorney.
+For specific legal guidance, consult a qualified immigration attorney.
       `;
-      pdf.text(disclaimer, margin, 130, { maxWidth: pageWidth - margin * 2 });
+      pdf.text(disclaimer, margin, 100, { maxWidth: pageWidth - margin * 2 });
 
       pdf.save("Immigenius_Report.pdf");
     } catch (err) {
       console.error("PDF generation failed:", err);
-      alert("Failed to generate PDF. Please try again.");
+      alert("Failed to generate PDF. Check console for details.");
     }
   });
 });
