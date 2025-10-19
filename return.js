@@ -199,20 +199,22 @@ document.addEventListener("DOMContentLoaded", () => {
       pdf.setFont("helvetica", "bolditalic");
       pdf.setFontSize(16);
       pdf.setTextColor(40, 40, 40);
-      pdf.text("Disclaimer", margin, 100);
+      pdf.text("Disclaimer", margin, 80);
 
       pdf.setFont("helvetica", "italic");
       pdf.setFontSize(12);
       pdf.setTextColor(80, 80, 80);
       const disclaimer = `
-This report has been generated automatically using AI reasoning 
-based on patterns derived from National Interest Waiver (NIW) cases.
-
-It is for informational purposes only and is NOT legal advice.
-
-For specific legal guidance, consult a qualified immigration attorney.
+        This report has been generated automatically using AI reasoning based on patterns derived from National Interest Waiver (NIW) cases. It is for informational purposes only and is NOT legal advice. For specific legal guidance, consult a qualified immigration attorney.
       `;
-      pdf.text(disclaimer, margin, 100, { maxWidth: pageWidth - margin * 2 });
+      pdf.text(disclaimer, margin, 120, { maxWidth: pageWidth - margin * 2 });
+      // Insert Reference ID under heading
+      const urlParams = new URLSearchParams(window.location.search);
+      const rB = urlParams.get("rB") || "N/A";
+      pdf.setFont("helvetica", "bold");
+      pdf.setFontSize(12);
+      pdf.setTextColor(50, 50, 50);
+      pdf.text(`Reference ID: #${rB}`, margin, 200);
 
       pdf.save("Immigenius_Report.pdf");
     } catch (err) {
