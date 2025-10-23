@@ -178,7 +178,7 @@ document.addEventListener("DOMContentLoaded", () => {
           pageCanvasHeightPx
         );
 
-        const imgData = pageCanvas.toDataURL("image/jpeg", 0.6); // compressed AF
+        const imgData = pageCanvas.toDataURL("image/jpeg", 1.0);
 
         pdf.addImage(
           imgData,
