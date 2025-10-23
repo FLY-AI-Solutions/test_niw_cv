@@ -49,7 +49,7 @@ async function initialize() {
     const urlParams = new URLSearchParams(window.location.search);
     const rB = urlParams.get("rB");
 
-    console.log("Initializing checkout with rB:", rB, "and Coupon:", currentCouponCode);
+    // console.log("Initializing checkout with rB:", rB, "and Coupon:", currentCouponCode);
 
     const fetchClientSecret = async () => {
       const response = await fetch(

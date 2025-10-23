@@ -19,12 +19,12 @@
         alert("No summary data found!");
       }
 
-      console.log(data);
+      // console.log(data);
 
       // Optional: listen for confirmation from widget
       window.addEventListener("message", (event) => {
         if (event.data.type === "widgetReady") {
-          console.log("Widget ready, sending data...");
+          // console.log("Widget ready, sending data...");
           const output = document.getElementById("widgetFrame").contentWindow;
           output.postMessage({ type: "updateSummary", data }, "*");
         }
